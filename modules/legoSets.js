@@ -1,27 +1,21 @@
 require('dotenv').config();
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize(
-    process.env.DB_DATABASE,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD, {
-      host: process.env.DB_HOST,
-      dialect: 'postgres',
-      port: 5432,
-      dialectOptions: {
-        ssl: {
-          rejectUnauthorized: false  // Ensure that this is actually needed for your setup
-        },
-      },
-    });
 
-sequelize
-    .authenticate()
-    .then(() => {
-      console.log('Connection has been established successfully.');
-    })
-    .catch((err) => {
-      console.log('Unable to connect to the database:', err);
-    });
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+    dialect: 'postgres',
+    dialectOptions: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    },
+    logging: console.log,
+});
+
+sequelize.authenticate()
+    .then(() => console.log('Connection has been established successfully.'))
+    .catch(err => console.log('Unable to connect to the database:', err));
+
 
 const Theme = sequelize.define('Theme', {
     id: {

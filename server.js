@@ -216,3 +216,5 @@ legoData.initialize()
     .catch((err) => {
       console.error("Unable to start server:", err);
     });
+
+module.exports = app;  // Used for vercel deployment

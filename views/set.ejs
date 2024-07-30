@@ -26,10 +26,12 @@
             </div>
         </div>
     </div>
+    <% if (session.user) { %>
     <div class="card-actions justify-center">
         <a href="/lego/editSet/<%= set.set_num %>" class="btn btn-success">Edit</a>
         <a href="#" onclick="history.back(); return false;" class="btn btn-primary">Return</a>
     </div>
+    <% } %>
     <div class="card card-side bg-base-100 shadow-xl my-3">
         <figure>
             <img src="<%= set.img_url %>" alt="<%= set.name %>" />

@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
 let db;
 let User;
 
-exports.initialize = function () {
+const initialize = function () {
     return new Promise((resolve, reject) => {
         db = mongoose.createConnection(process.env.MONGODB_URI);
         db.on('error', (err) => {
@@ -28,7 +28,7 @@ exports.initialize = function () {
     });
 };
 
-exports.registerUser = function (userData) {
+const registerUser = function (userData) {
     return new Promise((resolve, reject) => {
         if (userData.password !== userData.password2) {
             reject("Passwords do not match");
@@ -61,7 +61,7 @@ exports.registerUser = function (userData) {
     });
 };
 
-module.exports.checkUser = function (userData) {
+const checkUser = function (userData) {
     return new Promise(function (resolve, reject) {
         User.find({ userName: userData.userName })
             .then((users) => {
@@ -91,4 +91,10 @@ module.exports.checkUser = function (userData) {
                 reject("Unable to find user: " + userData.userName);
             });
     });
+};
+
+module.exports = {
+    initialize,
+    registerUser,
+    checkUser
 };

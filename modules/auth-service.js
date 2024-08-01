@@ -15,16 +15,14 @@ let User;
 
 const initialize = function () {
     return new Promise((resolve, reject) => {
-        const uri = process.env.MONGODB_URI;
-        db = mongoose.createConnection(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+        db = mongoose.createConnection(process.env.MONGODB_URI);
         db.on('error', (err) => {
             console.error('Connection error:', err);
             reject(err);
         });
         db.once('open', () => {
-            console.log('MongoDB connection established.');
             User = db.model('User', userSchema);
-            console.log('User model initialized.');
+            console.log('MongoDB connection established and user model initialized.');
             resolve();
         });
     });
